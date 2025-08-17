@@ -1,99 +1,87 @@
 <template>
   <div class="ck-cp-menu">
-    <div class="ck-cp-controller-bar" style="
-        display: flex;
-        justify-content: end;
-        position: relative;
-        flex-grow: 1;
-      ">
-      <!-- CHANGE Picker Mode BUTTON -->
-      <button v-if="showPickerMode" type="button" class="cp-btn" @click="handleChangePickerMode"
-        style="margin-bottom: var(--margin-top)">
-        <span v-show="mode == 'gradient'">{{
-          local.gradient ? local.gradient : "Gradient"
-        }}</span>
-        <span v-show="mode == 'solid'">{{
-          local.solid ? local.solid : "Solid"
-        }}</span>
-        <i v-if="iconClasses.arrowDown" :class="iconClasses.arrowDown"></i>
-        <svg v-else width="16" height="16" viewBox="-12 -4 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.9995 16.8001C11.2995 16.8001 10.5995 16.5301 10.0695 16.0001L3.54953 9.48014C3.25953 9.19014 3.25953 8.71014 3.54953 8.42014C3.83953 8.13014 4.31953 8.13014 4.60953 8.42014L11.1295 14.9401C11.6095 15.4201 12.3895 15.4201 12.8695 14.9401L19.3895 8.42014C19.6795 8.13014 20.1595 8.13014 20.4495 8.42014C20.7395 8.71014 20.7395 9.19014 20.4495 9.48014L13.9295 16.0001C13.3995 16.5301 12.6995 16.8001 11.9995 16.8001Z" />
-        </svg>
+    <div class="ck-cp-controller-bar">
+      <button type="button" class="cp-btn" @click="handleChangePickerMode('solid')"
+        :class="{ 'cp-btn-active': props.mode == 'solid' }"
+      >
+        <span class="ck-cp-svg-button-wrapper">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="31" height="31" rx="11.5" fill="transparent" 
+              :stroke="props.mode == 'solid' ? '#C09FE9' : '#F3F3F3'"
+            />
+            <rect x="4.5" y="4.5" width="23" height="23" rx="11.5" fill="#C09FE9" stroke="#C09FE9"/>
+          </svg>
+        </span>
       </button>
-      <!-- CHANGE Picker Mode BUTTON -->
-
-      <!-- CHANGE Gradient Mode BUTTON -->
-      <button v-if="mode == 'gradient'" type="button" class="cp-btn" style="margin-bottom: var(--margin-top)"
-        @click="handleChangeGradientMode">
-        <span v-show="gradientType == 'linear'">
-          {{ local.linear ? local.linear : "Linear" }}</span>
-        <span v-show="gradientType == 'radial'">{{
-          local.radial ? local.radial : "Radial"
-        }}</span>
-        <i v-if="iconClasses.arrowDown" :class="iconClasses.arrowDown"></i>
-        <svg v-else width="16" height="16" viewBox="-12 -4 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.9995 16.8001C11.2995 16.8001 10.5995 16.5301 10.0695 16.0001L3.54953 9.48014C3.25953 9.19014 3.25953 8.71014 3.54953 8.42014C3.83953 8.13014 4.31953 8.13014 4.60953 8.42014L11.1295 14.9401C11.6095 15.4201 12.3895 15.4201 12.8695 14.9401L19.3895 8.42014C19.6795 8.13014 20.1595 8.13014 20.4495 8.42014C20.7395 8.71014 20.7395 9.19014 20.4495 9.48014L13.9295 16.0001C13.3995 16.5301 12.6995 16.8001 11.9995 16.8001Z" />
-        </svg>
+      
+      <button type="button" class="cp-btn" @click="handleChangePickerMode('gradient-linear')"
+        :class="{ 'cp-btn-active': props.mode == 'gradient' && props.gradientType == 'linear' }"
+      >
+        <span class="ck-cp-svg-button-wrapper">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="31" height="31" rx="11.5" 
+              :stroke="props.mode == 'gradient' && props.gradientType == 'linear' ? '#C09FE9' : '#F3F3F3'"
+            />
+            <rect x="4" y="4" width="24" height="24" rx="12" fill="url(#paint0_linear_660_191)"/>
+            <defs>
+              <linearGradient id="paint0_linear_660_191" x1="4" y1="16" x2="28" y2="16" gradientUnits="userSpaceOnUse">
+                <stop offset="0.293269" stop-color="#C09FE9"/>
+                <stop offset="1" stop-color="white"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
       </button>
-      <!-- CHANGE Gradient Mode BUTTON -->
+      
+      <button type="button" class="cp-btn" @click="handleChangePickerMode('gradient-radial')"
+        :class="{ 'cp-btn-active': props.mode == 'gradient' && props.gradientType == 'radial' }"
+      >
+        <span class="ck-cp-svg-button-wrapper">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="31" height="31" rx="11.5" 
+              :stroke="props.mode == 'gradient' && props.gradientType == 'radial' ? '#C09FE9' : '#F3F3F3'"
+            />
+            <rect x="4" y="4" width="24" height="24" rx="12" fill="url(#paint0_radial_660_191)"/>
+            <defs>
+              <radialGradient id="paint0_radial_660_191" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(16 16) scale(12)">
+                <stop offset="0.543269" stop-color="#C09FE9"/>
+                <stop offset="1" stop-color="white"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </span>
+      </button>
+      
 
       <ColorInputMenu v-if="showInputMenu" style="margin-bottom: var(--margin-top)" :iconClass="iconClasses.arrowDown"
         :inputType="inputType" @onChangeInputName="handleChangeInputType">
       </ColorInputMenu>
 
-      <button v-if="mode == 'gradient'" type="button" class="cp-btn" style="margin-bottom: var(--margin-top)"
-        @click="isShowAngleRange = !isShowAngleRange">
-        <i v-if="iconClasses.ruler" :class="iconClasses.ruler"></i>
+    </div>
 
-        <svg v-else width="15" height="28" viewBox="0 -3 36 36" xmlns="http://www.w3.org/2000/svg">
-          <path d="M29.333 9.667h-8c-0.547 0-1-0.453-1-1s0.453-1 1-1h8c0.547 0 1 0.453 1 1s-0.453 1-1 1z"></path>
-          <path d="M8 9.667h-5.333c-0.547 0-1-0.453-1-1s0.453-1 1-1h5.333c0.547 0 1 0.453 1 1s-0.453 1-1 1z"></path>
-          <path
-            d="M13.333 14.333c-3.12 0-5.667-2.547-5.667-5.667s2.547-5.667 5.667-5.667c3.12 0 5.667 2.547 5.667 5.667s-2.547 5.667-5.667 5.667zM13.333 5c-2.027 0-3.667 1.64-3.667 3.667s1.64 3.667 3.667 3.667c2.027 0 3.667-1.64 3.667-3.667s-1.64-3.667-3.667-3.667z">
-          </path>
-          <path d="M29.333 24.333h-5.333c-0.547 0-1-0.453-1-1s0.453-1 1-1h5.333c0.547 0 1 0.453 1 1s-0.453 1-1 1z">
-          </path>
-          <path d="M10.667 24.333h-8c-0.547 0-1-0.453-1-1s0.453-1 1-1h8c0.547 0 1 0.453 1 1s-0.453 1-1 1z"></path>
-          <path
-            d="M18.667 29c-3.12 0-5.667-2.547-5.667-5.667s2.547-5.667 5.667-5.667c3.12 0 5.667 2.547 5.667 5.667s-2.547 5.667-5.667 5.667zM18.667 19.667c-2.027 0-3.667 1.64-3.667 3.667s1.64 3.667 3.667 3.667c2.027 0 3.667-1.64 3.667-3.667s-1.64-3.667-3.667-3.667z">
-          </path>
-        </svg>
-      </button>
-    </div>
-  </div>
-  <div v-if="mode == 'gradient'" v-show="gradientType == 'linear' && isShowAngleRange"
-    class="ck-cp-linear-angle-container">
-    <div>
-      <p class="ck-gradient-set-label" style="margin-top: 0">
-        {{ local.angle ? local.angle : "Angle" }} <span>{{ angle }}°</span>
+    <div v-if="mode == 'gradient'" v-show="gradientType == 'linear'"
+      class="ck-cp-linear-angle-container"
+    >
+       <p class="ck-gradient-set-label" style="margin-top: 0">
+        Угол наклона
       </p>
-      <input type="range" min="0" max="360" :value="angle" @input="handleInput($event, 'angle')" />
+      <input type="number" min="0" max="360" :value="angle" @input="handleInput($event, 'angle')" />
     </div>
-  </div>
 
-  <div v-if="mode == 'gradient' && isShowAngleRange" v-show="gradientType == 'radial'"
-    class="ck-cp-linear-angle-container">
-    <div>
+    <div v-if="mode == 'gradient'" v-show="gradientType == 'radial'"
+      class="ck-cp-linear-angle-container"
+    >
       <p class="ck-gradient-set-label" style="margin-top: 0">
-        {{ local.positionX ? local.positionX : "Position X" }}
-        <span>{{ percentageX }}%</span>
+        Ось X | Y
       </p>
-      <input type="range" min="0" max="100" :value="percentageX" @input="handleInput($event, 'percentageX')" />
-    </div>
-    <div>
-      <p class="ck-gradient-set-label">
-        {{ local.positionY ? local.positionY : "Position Y" }}
-        <span>{{ percentageY }}%</span>
-      </p>
-      <input type="range" min="0" max="100" :value="percentageY" @input="handleInput($event, 'percentageY')" />
+      <input type="number" min="0" max="100" :value="percentageX" @input="handleInput($event, 'percentageX')" />
+      <input type="number" min="0" max="100" :value="percentageY" @input="handleInput($event, 'percentageY')" />
     </div>
   </div>
+  
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Mode, InputType, Local, IconClasses } from "../core/types/types.ts";
 import ColorInputMenu from "./ColorInputMenu.vue";
 
@@ -125,7 +113,6 @@ const props = defineProps({
   },
 });
 
-const isShowAngleRange = ref(false);
 
 const emits = defineEmits<{
   (e: "onPickerChangeMode", value: Mode): void;
@@ -137,6 +124,7 @@ const emits = defineEmits<{
   (e: "update:percentageX", value: number): void;
   (e: "update:percentageY", value: number): void;
   (e: "onInput"): void;
+  (e: "onChangeGlobalMode", value: Array<string>): void;
 }>();
 
 const handleInput = (event: Event, type: string) => {
@@ -166,13 +154,30 @@ const handleInput = (event: Event, type: string) => {
 const handleChangeInputType = (event: InputType) => {
   emits("onChangeInputType", event);
 };
-
-const handleChangeGradientMode = () => {
+/*
+const handleChangeGradientMode = ( ) => {
   emits("onChangeMode", props.gradientType == "linear" ? "radial" : "linear");
 };
+*/
 
-const handleChangePickerMode = () => {
-  emits("onPickerChangeMode", props.mode == "gradient" ? "solid" : "gradient");
+const handleChangePickerMode = ( type: string ) => {
+  props.mode;
+  console.log(type)
+  switch (type) {
+    case "gradient-linear":
+      emits("onChangeGlobalMode", ["gradient", "linear"]);
+      //emits("onChangeMode", "linear");
+      break;
+    case "gradient-radial":
+      emits("onChangeGlobalMode", ["gradient", "radial"]);
+      //emits("onChangeMode", "radial");
+      break;
+    case "solid":
+      emits("onChangeGlobalMode", ["solid"]);
+      break;
+    default:
+      break;
+  }
 };
 </script>
 

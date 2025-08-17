@@ -1,34 +1,31 @@
 <template>
-  <div class="ck-cp-container" ref="pickerTemplateRef" :cp-theme="theme" :class="disabled ? 'ck-cp-disabled ' : ''">
+  <div class="ck-cp-container" ref="pickerTemplateRef" :cp-theme="theme" :class="disabled ? 'ck-cp-disabled ' : ''"
+    :style="{ left: -leftPosition + 'px' }"
+  >
     <PickerMenu v-model:angle="gradientAngle.angle" v-model:percentageX="gradientAngle.percentageX"
       v-model:percentageY="gradientAngle.percentageY" :local="local" :iconClasses="iconClasses" :inputType="inputType"
       :mode="PickerMode" :showInputMenu="showInputMenu" :gradientType="gradientType" :showPickerMode="showPickerMode"
       @onChangeMode="setBackgroundType" @onInput="setGradientBarColor" @onClickEyeDropper="handleOnClickEyeDropper"
       @onDeleteColor="deleteColor" @onChangeInputType="handleChangeInputType"
-      @on-picker-change-mode="handleChangePickerMode" />
+      @on-picker-change-mode="handleChangePickerMode" 
+      @on-change-global-mode="handleChangeGlobalMode"
+      v-if="showPickerMenu"
+      />
 
     <PickerWrap @onEventStart="handlePickerStartOnMouseDown" />
 
     <div v-if="PickerMode == 'gradient'" style="
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: calc(var(--margin-top) * 1.35);
-        padding: var(--padding);
+        gap: 13px;
+        margin-top: 13px;
+        padding: 0px;
       ">
       <button type="button" class="cp-main-btn" @click="deleteColor">
-        <i v-if="iconClasses.delete" :class="iconClasses.delete"></i>
-        <svg v-else width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M20.9997 6.72998C20.9797 6.72998 20.9497 6.72998 20.9197 6.72998C15.6297 6.19998 10.3497 5.99998 5.11967 6.52998L3.07967 6.72998C2.65967 6.76998 2.28967 6.46998 2.24967 6.04998C2.20967 5.62998 2.50967 5.26998 2.91967 5.22998L4.95967 5.02998C10.2797 4.48998 15.6697 4.69998 21.0697 5.22998C21.4797 5.26998 21.7797 5.63998 21.7397 6.04998C21.7097 6.43998 21.3797 6.72998 20.9997 6.72998Z" />
-          <path
-            d="M8.50074 5.72C8.46074 5.72 8.42074 5.72 8.37074 5.71C7.97074 5.64 7.69074 5.25 7.76074 4.85L7.98074 3.54C8.14074 2.58 8.36074 1.25 10.6907 1.25H13.3107C15.6507 1.25 15.8707 2.63 16.0207 3.55L16.2407 4.85C16.3107 5.26 16.0307 5.65 15.6307 5.71C15.2207 5.78 14.8307 5.5 14.7707 5.1L14.5507 3.8C14.4107 2.93 14.3807 2.76 13.3207 2.76H10.7007C9.64074 2.76 9.62074 2.9 9.47074 3.79L9.24074 5.09C9.18074 5.46 8.86074 5.72 8.50074 5.72Z" />
-          <path
-            d="M15.2104 22.7501H8.79039C5.30039 22.7501 5.16039 20.8201 5.05039 19.2601L4.40039 9.19007C4.37039 8.78007 4.69039 8.42008 5.10039 8.39008C5.52039 8.37008 5.87039 8.68008 5.90039 9.09008L6.55039 19.1601C6.66039 20.6801 6.70039 21.2501 8.79039 21.2501H15.2104C17.3104 21.2501 17.3504 20.6801 17.4504 19.1601L18.1004 9.09008C18.1304 8.68008 18.4904 8.37008 18.9004 8.39008C19.3104 8.42008 19.6304 8.77007 19.6004 9.19007L18.9504 19.2601C18.8404 20.8201 18.7004 22.7501 15.2104 22.7501Z" />
-          <path
-            d="M13.6601 17.25H10.3301C9.92008 17.25 9.58008 16.91 9.58008 16.5C9.58008 16.09 9.92008 15.75 10.3301 15.75H13.6601C14.0701 15.75 14.4101 16.09 14.4101 16.5C14.4101 16.91 14.0701 17.25 13.6601 17.25Z" />
-          <path
-            d="M14.5 13.25H9.5C9.09 13.25 8.75 12.91 8.75 12.5C8.75 12.09 9.09 11.75 9.5 11.75H14.5C14.91 11.75 15.25 12.09 15.25 12.5C15.25 12.91 14.91 13.25 14.5 13.25Z" />
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.0002 2.66667H11.9335C11.7788 1.91428 11.3694 1.23823 10.7743 0.752479C10.1793 0.266727 9.43497 0.000969683 8.66683 0L7.3335 0C6.56536 0.000969683 5.82104 0.266727 5.226 0.752479C4.63095 1.23823 4.22156 1.91428 4.06683 2.66667H2.00016C1.82335 2.66667 1.65378 2.7369 1.52876 2.86193C1.40373 2.98695 1.3335 3.15652 1.3335 3.33333C1.3335 3.51014 1.40373 3.67971 1.52876 3.80474C1.65378 3.92976 1.82335 4 2.00016 4H2.66683V12.6667C2.66789 13.5504 3.01942 14.3976 3.64431 15.0225C4.2692 15.6474 5.11643 15.9989 6.00016 16H10.0002C10.8839 15.9989 11.7311 15.6474 12.356 15.0225C12.9809 14.3976 13.3324 13.5504 13.3335 12.6667V4H14.0002C14.177 4 14.3465 3.92976 14.4716 3.80474C14.5966 3.67971 14.6668 3.51014 14.6668 3.33333C14.6668 3.15652 14.5966 2.98695 14.4716 2.86193C14.3465 2.7369 14.177 2.66667 14.0002 2.66667ZM7.3335 1.33333H8.66683C9.08035 1.33384 9.48358 1.46225 9.82124 1.70096C10.1589 1.93967 10.4144 2.27699 10.5528 2.66667H5.4475C5.58588 2.27699 5.84143 1.93967 6.17909 1.70096C6.51674 1.46225 6.91998 1.33384 7.3335 1.33333ZM12.0002 12.6667C12.0002 13.1971 11.7894 13.7058 11.4144 14.0809C11.0393 14.456 10.5306 14.6667 10.0002 14.6667H6.00016C5.46973 14.6667 4.96102 14.456 4.58595 14.0809C4.21088 13.7058 4.00016 13.1971 4.00016 12.6667V4H12.0002V12.6667Z" fill="#595959"/>
+          <path d="M6.66667 11.9993C6.84348 11.9993 7.01304 11.9291 7.13807 11.8041C7.26309 11.6791 7.33333 11.5095 7.33333 11.3327V7.33268C7.33333 7.15587 7.26309 6.9863 7.13807 6.86128C7.01304 6.73625 6.84348 6.66602 6.66667 6.66602C6.48985 6.66602 6.32029 6.73625 6.19526 6.86128C6.07024 6.9863 6 7.15587 6 7.33268V11.3327C6 11.5095 6.07024 11.6791 6.19526 11.8041C6.32029 11.9291 6.48985 11.9993 6.66667 11.9993Z" fill="#595959"/>
+          <path d="M9.33317 11.9993C9.50999 11.9993 9.67956 11.9291 9.80458 11.8041C9.92961 11.6791 9.99985 11.5095 9.99985 11.3327V7.33268C9.99985 7.15587 9.92961 6.9863 9.80458 6.86128C9.67956 6.73625 9.50999 6.66602 9.33317 6.66602C9.15636 6.66602 8.98679 6.73625 8.86177 6.86128C8.73674 6.9863 8.6665 7.15587 8.6665 7.33268V11.3327C8.6665 11.5095 8.73674 11.6791 8.86177 11.8041C8.98679 11.9291 9.15636 11.9993 9.33317 11.9993Z" fill="#595959"/>
         </svg>
       </button>
 
@@ -38,8 +35,8 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-top: calc(var(--margin-top) * 1.35);
-        padding: var(--padding);
+        margin-top: 17px;
+        padding: 0px;
       ">
       <button type="button" v-if="isEyeDropperUsing && showEyeDrop" id="cp-btn-eyedropper" class="cp-main-btn"
         @click="handleOnClickEyeDropper">
@@ -55,12 +52,7 @@
         </svg>
       </button>
 
-      <div style="
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          gap: calc(var(--margin-top) * 1.85);
-        ">
+      <div class="ck-cp-colorbar-container">
         <PickerHue v-model="hue" :showEyeDrop="showEyeDrop" :isEyeDropperUsing="isEyeDropperUsing"
           @onInput="setHue(false)" @onChange="handleHueChange" @onClickEyeDropper="handleOnClickEyeDropper" />
 
@@ -73,42 +65,44 @@
     <div v-if="isReady && showInputSet" class="ck-cp-input-container">
       <InputHex v-if="inputType !== 'CMYK'" v-model="hexVal" @update:model-value="applyHex" />
 
-      <InputNumber v-if="inputType == 'RGB'" label="R" :min="0" :max="255"
-        v-model="colorList.find((item) => item.select == true)!.r"
-        @update:model-value="(value) => handleRGBAInput(value, 'r')" />
-      <InputNumber v-if="inputType == 'RGB'" label="G" :min="0" :max="255"
-        v-model="colorList.find((item) => item.select == true)!.g"
-        @update:model-value="(value) => handleRGBAInput(value, 'g')" />
-      <InputNumber v-if="inputType == 'RGB'" label="B" :min="0" :max="255"
-        v-model="colorList.find((item) => item.select == true)!.b"
-        @update:model-value="(value) => handleRGBAInput(value, 'b')" />
+      <div class="ck-cp-input-number-container">
+        <InputNumber v-if="inputType == 'RGB'" label="R" :min="0" :max="255"
+          v-model="colorList.find((item) => item.select == true)!.r"
+          @update:model-value="(value) => handleRGBAInput(value, 'r')" />
+        <InputNumber v-if="inputType == 'RGB'" label="G" :min="0" :max="255"
+          v-model="colorList.find((item) => item.select == true)!.g"
+          @update:model-value="(value) => handleRGBAInput(value, 'g')" />
+        <InputNumber v-if="inputType == 'RGB'" label="B" :min="0" :max="255"
+          v-model="colorList.find((item) => item.select == true)!.b"
+          @update:model-value="(value) => handleRGBAInput(value, 'b')" />
 
-      <InputNumber v-if="inputType == 'HSL'" label="H" :min="0" :max="360" v-model="HSL.h"
-        @update:model-value="handleHSLInput" />
-      <InputNumber v-if="inputType == 'HSL'" label="S" :min="0" :max="100" v-model="HSL.s"
-        @update:model-value="handleHSLInput" />
-      <InputNumber v-if="inputType == 'HSL'" label="L" :min="0" :max="100" v-model="HSL.l"
-        @update:model-value="handleHSLInput" />
+        <InputNumber v-if="inputType == 'HSL'" label="H" :min="0" :max="360" v-model="HSL.h"
+          @update:model-value="handleHSLInput" />
+        <InputNumber v-if="inputType == 'HSL'" label="S" :min="0" :max="100" v-model="HSL.s"
+          @update:model-value="handleHSLInput" />
+        <InputNumber v-if="inputType == 'HSL'" label="L" :min="0" :max="100" v-model="HSL.l"
+          @update:model-value="handleHSLInput" />
 
-      <InputNumber v-if="inputType == 'HSV'" label="H" :min="0" :max="360" v-model="HSV.h"
-        @update:model-value="handleHSVInput" />
-      <InputNumber v-if="inputType == 'HSV'" label="S" :min="0" :max="100" v-model="HSV.s"
-        @update:model-value="handleHSVInput" />
-      <InputNumber v-if="inputType == 'HSV'" label="V" :min="0" :max="100" v-model="HSV.v"
-        @update:model-value="handleHSVInput" />
+        <InputNumber v-if="inputType == 'HSV'" label="H" :min="0" :max="360" v-model="HSV.h"
+          @update:model-value="handleHSVInput" />
+        <InputNumber v-if="inputType == 'HSV'" label="S" :min="0" :max="100" v-model="HSV.s"
+          @update:model-value="handleHSVInput" />
+        <InputNumber v-if="inputType == 'HSV'" label="V" :min="0" :max="100" v-model="HSV.v"
+          @update:model-value="handleHSVInput" />
 
-      <InputNumber v-if="inputType == 'CMYK'" label="C" :min="0" :max="100" v-model="CMYK.c"
-        @update:model-value="handleCMYKInput" />
-      <InputNumber v-if="inputType == 'CMYK'" label="M" :min="0" :max="100" v-model="CMYK.m"
-        @update:model-value="handleCMYKInput" />
-      <InputNumber v-if="inputType == 'CMYK'" label="Y" :min="0" :max="100" v-model="CMYK.y"
-        @update:model-value="handleCMYKInput" />
-      <InputNumber v-if="inputType == 'CMYK'" label="K" :min="0" :max="100" v-model="CMYK.k"
-        @update:model-value="handleCMYKInput" />
+        <InputNumber v-if="inputType == 'CMYK'" label="C" :min="0" :max="100" v-model="CMYK.c"
+          @update:model-value="handleCMYKInput" />
+        <InputNumber v-if="inputType == 'CMYK'" label="M" :min="0" :max="100" v-model="CMYK.m"
+          @update:model-value="handleCMYKInput" />
+        <InputNumber v-if="inputType == 'CMYK'" label="Y" :min="0" :max="100" v-model="CMYK.y"
+          @update:model-value="handleCMYKInput" />
+        <InputNumber v-if="inputType == 'CMYK'" label="K" :min="0" :max="100" v-model="CMYK.k"
+          @update:model-value="handleCMYKInput" />
 
-      <InputNumber v-if="showAlpha" label="A" :min="0" :max="100" style="margin-right: 2px"
-        v-model="colorList.find((item) => item.select == true)!.a"
-        @update:model-value="(value) => handleRGBAInput(value, 'a')" />
+        <InputNumber v-if="showAlpha" label="A" :min="0" :max="100" style="margin-right: 2px"
+          v-model="colorList.find((item) => item.select == true)!.a"
+          @update:model-value="(value) => handleRGBAInput(value, 'a')" />
+      </div>
     </div>
 
     <HistoryColorList v-if="showColorList" :color-list-count="colorListCount" :hex-val="hexVal"
@@ -179,7 +173,9 @@ const props = defineProps({
   showColorList: { default: true, type: Boolean },
   showEyeDrop: { default: true, type: Boolean },
   showPickerMode: { default: true, type: Boolean },
+  leftPosition: { default: 0, type: Number },
   showAlpha: { default: true, type: Boolean },
+  showPickerMenu: { default: true, type: Boolean },
   showInputMenu: { default: true, type: Boolean },
   showInputSet: { default: true, type: Boolean },
   disabled: { default: false, type: Boolean },
@@ -315,11 +311,11 @@ const handlePickerStartOnMouseDown = (event: MouseEvent | TouchEvent) => {
   onChangeSetToHexValue();
 
   if (isTouchEvent) {
-    window.addEventListener("touchmove", handlePickerOnMouseMove);
-    window.addEventListener("touchend", handlePickerOnMouseUp);
+    window.parent.document.addEventListener("touchmove", handlePickerOnMouseMove);
+    window.parent.document.addEventListener("touchend", handlePickerOnMouseUp);
   } else {
-    window.addEventListener("mousemove", handlePickerOnMouseMove);
-    window.addEventListener("mouseup", handlePickerOnMouseUp);
+    window.parent.document.addEventListener("mousemove", handlePickerOnMouseMove);
+    window.parent.document.addEventListener("mouseup", handlePickerOnMouseUp);
   }
 };
 
@@ -363,11 +359,11 @@ const handlePickerOnMouseUp = (event: TouchEvent | MouseEvent) => {
   const isTouchEvent = "TouchEvent" in window && event instanceof TouchEvent;
 
   if (isTouchEvent) {
-    window.removeEventListener("touchmove", handlePickerOnMouseMove);
-    window.removeEventListener("touchend", handlePickerOnMouseUp);
+    window.parent.document.removeEventListener("touchmove", handlePickerOnMouseMove);
+    window.parent.document.removeEventListener("touchend", handlePickerOnMouseUp);
   } else {
-    window.removeEventListener("mousemove", handlePickerOnMouseMove);
-    window.removeEventListener("mouseup", handlePickerOnMouseUp);
+    window.parent.document.removeEventListener("mousemove", handlePickerOnMouseMove);
+    window.parent.document.removeEventListener("mouseup", handlePickerOnMouseUp);
   }
 };
 
@@ -547,11 +543,11 @@ const handleGradientItemOnMouseDown = (event: MouseEvent | TouchEvent) => {
     const isTouchEvent = "TouchEvent" in window && event instanceof TouchEvent;
 
     if (isTouchEvent) {
-      window.addEventListener("touchmove", handleGradientMouseMove);
-      window.addEventListener("touchend", handleGradientItemOnMouseUp);
+      window.parent.document.addEventListener("touchmove", handleGradientMouseMove);
+      window.parent.document.addEventListener("touchend", handleGradientItemOnMouseUp);
     } else {
-      window.addEventListener("mousemove", handleGradientMouseMove);
-      window.addEventListener("mouseup", handleGradientItemOnMouseUp);
+      window.parent.document.addEventListener("mousemove", handleGradientMouseMove);
+      window.parent.document.addEventListener("mouseup", handleGradientItemOnMouseUp);
     }
   }
 };
@@ -559,11 +555,11 @@ const handleGradientItemOnMouseDown = (event: MouseEvent | TouchEvent) => {
 const handleGradientItemOnMouseUp = (event: TouchEvent | MouseEvent) => {
   const isTouchEvent = "TouchEvent" in window && event instanceof TouchEvent;
   if (isTouchEvent) {
-    window.removeEventListener("touchmove", handleGradientMouseMove);
-    window.removeEventListener("touchend", handleGradientItemOnMouseUp);
+    window.parent.document.removeEventListener("touchmove", handleGradientMouseMove);
+    window.parent.document.removeEventListener("touchend", handleGradientItemOnMouseUp);
   } else {
-    window.removeEventListener("mousemove", handleGradientMouseMove);
-    window.removeEventListener("mouseup", handleGradientItemOnMouseUp);
+    window.parent.document.removeEventListener("mousemove", handleGradientMouseMove);
+    window.parent.document.removeEventListener("mouseup", handleGradientItemOnMouseUp);
   }
 
 };
@@ -1376,19 +1372,29 @@ const handleChangeInputType = (event: InputType) => {
   }
 };
 
+const handleChangeGlobalMode = async (event: Array<string>) => {
+  await handleChangePickerMode(event[0] as Mode);
+  if( event.length == 2 ){
+    setBackgroundType(event[1] as string);
+  }
+};
+
 const handleChangePickerMode = (event: Mode) => {
-  PickerMode.value = event;
+  return new Promise<void>((resolve) => {
+    PickerMode.value = event;
 
-  setTimeout(() => {
-    if (PickerMode.value == "gradient") {
-      gradientMouseBar = pickerTemplateRef.value?.querySelector(
-        ".gradient-bar"
-      ) as HTMLElement;
-    }
+    setTimeout(() => {
+      if (PickerMode.value == "gradient") {
+        gradientMouseBar = pickerTemplateRef.value?.querySelector(
+          ".gradient-bar"
+        ) as HTMLElement;
+      }
 
-    applyValue(props.modelValue as string);
-    handleChangeInputType(inputType.value);
-  }, 0);
+      applyValue(props.modelValue as string);
+      handleChangeInputType(inputType.value);
+      resolve();
+    }, 0);
+  });
 };
 
 const applyValue = (value: string) => {
@@ -1485,10 +1491,10 @@ onMounted(() => {
   left: 0;
   background-color: var(--cp-container-bg);
   border-radius: 0.5rem;
-  padding: 0px;
-  width: 270px;
+  padding: 15px;
+  width: 360px;
   height: auto;
-  box-shadow: 0px 0px 34px 1px var(--cp-container-shadow);
+  box-shadow: 0 0 10px 1px #5858584f;
   padding-bottom: calc(var(--margin-top) * 1.5);
   padding-top: var(--margin-top);
 }
@@ -1497,47 +1503,80 @@ onMounted(() => {
   outline: none;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;
+
+  .ck-cp-colorbar-container{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 23px;
+    margin-top: 0px;
+  }
 }
 
 .ck-cp-controller-bar {
   // height: 35px;
   // background-color: #f1f1f1;
   // margin-top: 0.5rem;
-  border-radius: 0.475rem;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+
+  display: flex;
+  justify-content: start;
+  position: relative;
+
+  background-color: #FBFBFB;
+  border: 1px solid #F3F3F3;
+  border-radius: 12px;
+  height: 40px;
+  overflow: hidden;
+  padding: 3px 7px;
+
 }
 
 .ck-cp-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--padding);
+  padding: 0px;
 }
 
 .cp-btn {
   border: 0;
-  height: 30px !important;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   border-radius: 5px;
-  padding: 0px;
   background-color: var(--cp-container-bg);
   color: var(--cp-gray-700);
+
+  margin-bottom: 0px;
+  display: flex;
+  padding: 0px;
+  height: 100% !important;
+  margin: 0px;
+  padding: 0px !important;
+
+  cursor: pointer;
+}
+.ck-cp-svg-button-wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.cp-btn svg {
-  fill: var(--cp-gray-700);
-}
 
 .cp-picker-wrap {
-  height: 145px;
+  height: 158px;
   position: relative;
   overflow: hidden;
-  margin: var(--padding);
+  margin: 0px;
+  margin-top: 15px;
+
+  canvas{
+      border-radius: 12px
+  }
 }
 
 .picker-saturation {
@@ -1553,11 +1592,12 @@ onMounted(() => {
   pointer-events: none;
   cursor: pointer;
   position: absolute;
-  width: 12px;
-  height: 12px;
-  box-shadow: 0 0 0 1.5px var(--cp-container-bg),
-    inset 0 0 1px 1px var(--cp-gray-900), 0 0 1px 2px var(--cp-gray-900);
   border-radius: 50%;
+  background-color: transparent;
+  border: 4px solid #C09FE9;
+  width: 16px;
+  height: 16px;
+  box-shadow: none;
 }
 
 .colour-area-mask {
@@ -1579,6 +1619,7 @@ onMounted(() => {
 .picker-hue {
   width: 100%;
   height: 8px;
+  margin-top: 0px;
 }
 
 .picker-hue-range-slider {
@@ -1624,31 +1665,27 @@ onMounted(() => {
   }
 
   &::-webkit-slider-thumb {
-    box-shadow: 0px -0px 6px 0px var(--cp-range-shadow);
-    border: 1px solid var(--cp-range-border);
-    background-color: var(--cp-primary);
-    height: 14px;
-    width: 14px;
     border-radius: 50%;
     appearance: none;
-    cursor: pointer;
-    cursor: move;
-    cursor: grab;
+    cursor: ew-resize;
     cursor: -webkit-grab;
+    background-color: transparent !important;
+    border: 4px solid #C09FE9;
+    width: 16px;
+    height: 16px;
+    box-shadow: none;
   }
 
   &::-moz-range-thumb {
-    box-shadow: 0px -0px 6px 0px var(--cp-range-shadow);
-    border: 1px solid var(--cp-range-border);
-    background-color: var(--cp-primary);
-    height: 14px;
-    width: 14px;
     border-radius: 50%;
     appearance: none;
-    cursor: pointer;
-    cursor: move;
-    cursor: grab;
+    cursor: ew-resize;
     cursor: -webkit-grab;
+    background-color: transparent !important;
+    border: 4px solid #C09FE9;
+    width: 16px;
+    height: 16px;
+    box-shadow: none;
   }
 }
 
@@ -1671,6 +1708,7 @@ onMounted(() => {
   display: block;
   outline: none;
   transition: color 0.05s linear;
+        background: linear-gradient(90deg, #F6F6F6 0%, #BDBDBD 100%) !important;
 
   &:focus {
     outline: none;
@@ -1695,31 +1733,31 @@ onMounted(() => {
   }
 
   &::-webkit-slider-thumb {
-    box-shadow: 0px -0px 6px 0px var(--cp-range-shadow);
-    border: 1px solid var(--cp-range-border);
-    background-color: var(--cp-primary);
-    height: 14px;
-    width: 14px;
     border-radius: 50%;
     appearance: none;
     cursor: pointer;
     cursor: move;
     cursor: grab;
     cursor: -webkit-grab;
+    background-color: transparent !important;
+    border: 4px solid #C09FE9;
+    width: 16px;
+    height: 16px;
+    box-shadow: none;
   }
 
   &::-moz-range-thumb {
-    box-shadow: 0px -0px 6px 0px var(--cp-range-shadow);
-    border: 1px solid var(--cp-range-border);
-    background-color: var(--cp-primary);
-    height: 14px;
-    width: 14px;
     border-radius: 50%;
     appearance: none;
     cursor: pointer;
     cursor: move;
     cursor: grab;
     cursor: -webkit-grab;
+    background-color: transparent !important;
+    border: 4px solid #C09FE9;
+    width: 16px;
+    height: 16px;
+    box-shadow: none;
   }
 }
 
@@ -1748,17 +1786,23 @@ onMounted(() => {
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px -0px 6px 0px var(--cp-range-shadow);
-  border: 1px solid var(--cp-range-border);
-  background-color: var(--cp-primary);
-  height: 14px;
-  width: 14px;
+
+
+  position: absolute;
   border-radius: 50%;
+  background-color: transparent;
+  border: 4px solid #C09FE9;
+  width: 16px;
+  height: 16px;
+  box-shadow: none;
+  margin-top: -1px;
 }
 
 .gradient-handle.select .gradient-handle-content {
-  background-color: var(--cp-primary);
-  border: 2px solid var(--cp-range-border);
+  border: 5px solid #C09FE9;
+  margin-top: -2px;
+  width: 18px;
+  height: 18px;
 }
 
 .gradient-handle.select {
@@ -1789,9 +1833,32 @@ onMounted(() => {
 }
 
 .ck-cp-linear-angle-container {
-  padding: var(--padding);
-  margin-bottom: calc(var(--margin-top) * 1.75);
+  padding: 0px;
+  margin-bottom: 0px;
+  display: flex;
+  gap: 5px;
   // margin: 1rem 0 2rem 0;
+
+  input{
+    width: 60px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #F3F3F3;
+    background-color: #FBFBFB;
+    border-radius: 12px;
+    padding: 0px;
+    text-align: center;
+    box-sizing: border-box;
+
+    -moz-appearance:textfield;
+    
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0; 
+    }
+
+  }
 }
 
 .ck-cp-linear-angle-container input[type="range"] {
@@ -1859,11 +1926,10 @@ onMounted(() => {
 
 .ck-cp-linear-angle-container .ck-gradient-set-label {
   text-align: start;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--cp-gray-700);
-  margin: 0;
-  margin-top: var(--margin-top);
-  margin-bottom: calc(var(--margin-top) / 2);
+  line-height: 40px;
+  margin: 0px;
 }
 
 .ck-cp-linear-angle-container .ck-gradient-set-label span {
@@ -1876,11 +1942,46 @@ onMounted(() => {
 }
 
 .ck-cp-input-container {
-  display: flex;
-  gap: 8px;
-  margin: 0 10px;
+  display: flex;    
+  justify-content: space-between;
+  margin: 0px;
+  margin-top: 19px;
 
-  margin-top: calc(var(--margin-top) * 2.5);
+  .ck-cp-input-number-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+
+    .ck-cp-input-content{
+      input{
+        border-radius: 0px !important;
+        width: 56px !important;
+        line-height: 40px !important;
+        height: 40px !important;
+        border: 1px solid #F3F3F3 !important;
+        background-color: #FBFBFB !important;
+        font-size: 14px !important;
+        color: #323232 !important;
+        border-right-width: 0px !important;
+      }
+      
+
+      &:first-child{
+        input{
+          border-top-left-radius: 10px !important;
+          border-bottom-left-radius: 10px !important;
+        }
+      }
+      &:last-child{
+        input{
+          border-top-right-radius: 10px !important;
+          border-bottom-right-radius: 10px !important;
+          border-right-width: 1px !important;
+        }
+      }
+    }
+    
+  }
 }
 
 .ck-cp-input-container input {
@@ -1937,7 +2038,19 @@ onMounted(() => {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90px;
+
+  input{
+    width: 90px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    border-radius: 10px !important;
+    border: 1px solid #F3F3F3;
+    background-color: #FBFBFB;
+    font-family: 'RobotoMonoL', sans-serif;
+    font-size: 14px !important;
+    color: #323232;
+  }
 }
 
 .ck-cp-input-container .ck-cp-input-content .ck-cp-input-label {
@@ -1988,14 +2101,11 @@ onMounted(() => {
   align-items: center;
   font-size: 14px;
   background-color: var(--cp-container-bg);
-  padding: 0;
+  padding: 0px !important;
   justify-content: center;
+  cursor: pointer;
 }
 
-.cp-main-btn svg {
-  transform: scale(0.9, 0.9);
-  fill: var(--cp-gray-700);
-}
 
 .cp-btn-save-color {
   background-color: transparent;

@@ -1,6 +1,5 @@
 <template>
     <div class="ck-cp-input-content">
-        <span class="ck-cp-input-label">{{ label }}</span>
         <input type="number" :min="min" :max="max" :value="internal" @input="handleInput" @keydown="handleKeydown"
             @focusout="handleFocusOut" />
     </div>

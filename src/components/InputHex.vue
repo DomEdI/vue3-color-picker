@@ -1,6 +1,5 @@
 <template>
     <div class="ck-cp-input-content color-hex">
-        <span class="ck-cp-input-label">HEX</span>
         <input type="text" :value="internal" @input="handleInput" @keydown="handleKeydown" @focusout="handleFocusout" />
     </div>
 </template>
